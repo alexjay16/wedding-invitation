@@ -6,14 +6,13 @@ Run:  python server.py
 Then open:  http://localhost:8000
 
 Guest data is saved automatically to guests.json in this folder.
-Open guests.json in VS Code to view or delete entries.
 """
 
 import json, os, sys
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 
 GUESTS_FILE = os.path.join(os.path.dirname(__file__), "guests.json")
-PORT = 8000
+PORT = int(os.environ.get("PORT", 8000))
 
 
 def load_guests():
@@ -34,16 +33,17 @@ def save_guests(data):
 class Handler(SimpleHTTPRequestHandler):
 
     def log_message(self, fmt, *args):
-        # Clean minimal logging
         print(f"  {self.address_string()}  {fmt % args}")
 
-    # ── API routes ────────────────────────────────────────────────────────────
-
     def do_GET(self):
-        if self.path == "/api/guests":
+        # Serve wedding-invite.html as the homepage
+        if self.path == "/" or self.path == "":
+            self.path = "/wedding-invite.html"
+            return super().do_GET()
+        elif self.path == "/api/guests":
             self._json(200, load_guests())
         else:
-            super().do_GET()   # serve static files (wedding-invite.html etc.)
+            super().do_GET()
 
     def do_POST(self):
         if self.path == "/api/guests":
@@ -52,7 +52,7 @@ class Handler(SimpleHTTPRequestHandler):
             guests = load_guests()
             guests.append(entry)
             save_guests(guests)
-            print(f"  ✦ New RSVP saved → {entry.get('fullName', '?')}  (guests.json updated)")
+            print(f"  ✦ New RSVP saved → {entry.get('fullName', '?')}")
             self._json(200, {"ok": True, "total": len(guests)})
         else:
             self._json(404, {"error": "not found"})
@@ -65,7 +65,7 @@ class Handler(SimpleHTTPRequestHandler):
             guests = [g for g in guests if g.get("id") != gid]
             save_guests(guests)
             removed = before - len(guests)
-            print(f"  ✦ Deleted guest id={gid}  (removed {removed})  (guests.json updated)")
+            print(f"  ✦ Deleted guest id={gid}  (removed {removed})")
             self._json(200, {"ok": True, "removed": removed})
         else:
             self._json(404, {"error": "not found"})
@@ -74,8 +74,6 @@ class Handler(SimpleHTTPRequestHandler):
         self.send_response(204)
         self._cors_headers()
         self.end_headers()
-
-    # ── Helpers ───────────────────────────────────────────────────────────────
 
     def _read_body(self):
         length = int(self.headers.get("Content-Length", 0))
@@ -97,7 +95,6 @@ class Handler(SimpleHTTPRequestHandler):
 
 
 if __name__ == "__main__":
-    # Create empty guests.json if it doesn't exist yet
     if not os.path.exists(GUESTS_FILE):
         save_guests([])
         print(f"  Created guests.json")
@@ -105,8 +102,7 @@ if __name__ == "__main__":
     server = HTTPServer(("", PORT), Handler)
     print(f"\n  ╔══════════════════════════════════════════╗")
     print(f"  ║  Wedding RSVP Server  →  running         ║")
-    print(f"  ║  Open:  http://localhost:{PORT}             ║")
-    print(f"  ║  Data:  guests.json  (edit in VS Code)   ║")
+    print(f"  ║  Port: {PORT}                               ║")
     print(f"  ╚══════════════════════════════════════════╝\n")
 
     try:
