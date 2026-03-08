@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>លិខិតអញ្ជើញពិធីមង្គលការ – Vicheanuk & Menly</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Moul&family=Battambang:wght@300;400;700&family=Hanuman:wght@100;300;400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400;1,500&family=Dangrek&family=Chenla&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy:        #1a2840;
+      --navy-mid:    #1e3050;
+      --navy-deep:   #111e2e;
+      --gold:        #c8a882;
+      --gold-light:  #e0ccb0;
+      --gold-dark:   #9e7848;
+      --rose:        #eac8aa;
+      --rose-mid:    #d4a088;
+      --text-bright: #f6eedf;
+      --text-soft:   #cdb89e;
+      --text-faint:  #7a6e60;
+      --navy-bg:     #0d1a28;
+      --font-display-kh: 'Moul', serif;
+      --font-body-kh:    'Battambang', serif;
+      --font-ui-kh:      'Hanuman', sans-serif;
+      --font-names-en:   'Cormorant Garamond', serif;
+      --font-khmer-script: 'Chenla', serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--navy-bg);
+      background-image:
+        radial-gradient(ellipse at 15% 10%, #1c3050 0%, transparent 55%),
+        radial-gradient(ellipse at 85% 90%, #182840 0%, transparent 55%);
+      min-height: 100vh;
+      font-family: var(--font-ui-kh);
+      padding: 40px 20px 60px;
+    }
+
+    @keyframes fadeUp  { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes spin    { to { transform: rotate(360deg); } }
+
+    /* ──────────────────────────────────────────
+       LAYOUT
+    ────────────────────────────────────────── */
+    .page-layout {
+      display: flex;
+      gap: 36px;
+      justify-content: center;
+      align-items: flex-start;
+      max-width: 1100px;
+      margin: 0 auto;
+      flex-wrap: wrap;
+    }
+
+    /* ──────────────────────────────────────────
+       INVITATION CARD
+    ────────────────────────────────────────── */
+    .card {
+      background: var(--navy);
+      width: 100%;
+      max-width: 520px;
+      position: relative;
+      box-shadow: 0 20px 100px rgba(0,0,0,0.6), 0 4px 20px rgba(0,0,0,0.4);
+      animation: fadeUp 1s ease 0.1s both;
+      flex-shrink: 0;
+      overflow: hidden;
+      border: 1px solid rgba(200,168,130,0.18);
+    }
+    .card::before,.card::after,.c-br,.c-bl {
+      content: ''; position: absolute;
+      width: 60px; height: 60px;
+      border-color: rgba(200,168,130,0.6); border-style: solid; z-index: 4;
+    }
+    .card::before { top:14px; left:14px;   border-width:2px 0 0 2px; }
+    .card::after  { top:14px; right:14px;  border-width:2px 2px 0 0; }
+    .c-br { bottom:14px; right:14px; border-width:0 2px 2px 0; }
+    .c-bl { bottom:14px; left:14px;  border-width:0 0 2px 2px; }
+
+    .card-header {
+      background: linear-gradient(168deg,#1e3c60 0%,#152840 52%,#1a2840 100%);
+      width: 100%; padding: 46px 44px 52px;
+      position: relative; overflow: hidden; text-align: center;
+    }
+    .bokeh-canvas { position:absolute; inset:0; width:100%; height:100%; pointer-events:none; }
+
+    .card-header .together {
+      font-family: var(--font-display-kh); font-size:11px;
+      color: rgba(220,168,128,0.75); line-height:1.8; margin-bottom:16px;
+      position: relative; z-index:1;
+    }
+
+    /* Main title styles */
+    .main-title-wrap {
+      position: relative; z-index: 1;
+      margin-bottom: 10px;
+      padding-bottom: 14px;
+    }
+    .main-title-deco {
+      display: flex; align-items: center; justify-content: center;
+      gap: 12px; margin-bottom: 10px;
+    }
+    .main-title-deco-line {
+      flex: 1; max-width: 60px; height: 1px;
+      background: linear-gradient(to right, transparent, rgba(200,168,130,0.5));
+    }
+    .main-title-deco-line.right {
+      background: linear-gradient(to left, transparent, rgba(200,168,130,0.5));
+    }
+    .main-title-deco-star {
+      font-size: 15px; color: rgba(200,168,130,0.6); letter-spacing: 4px;
+    }
+.main-title {
+  font-family: 'Suwannaphum', 'Moul', serif;
+  /* Reduced the min size to 16px and vw to 5.5vw to ensure it fits mobile screens */
+  font-size: clamp(16px, 5.5vw, 35px); 
+  white-space: nowrap;
+  color: var(--gold-light);
+  line-height: 1.7;
+  text-align: center;
+  text-shadow: 0 2px 20px rgba(200,168,130,0.35), 0 0 50px rgba(200,168,130,0.15);
+  letter-spacing: 0.02em;
+  
+  /* Adding these ensures the paragraph takes up the full container width for proper centering */
+  width: 100%;
+  margin: 0 auto;
+}
+    
+    .main-title-sub {
+      font-family: var(--font-names-en);
+      font-style: italic;
+      font-size: 13px;
+      color: rgba(200,168,130,0.5);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+    .card-header .names      { position:relative; z-index:1; margin-top:8px; }
+    .card-header .names h1   { font-family:var(--font-names-en); font-weight:400; font-style:italic; font-size:74px; line-height:1.1; color:#f2dcc4; text-shadow:0 2px 28px rgba(0,0,0,0.45),0 0 60px rgba(220,168,130,0.2); }
+    .card-header .ampersand  { display:block; font-family:var(--font-names-en); font-style:italic; font-size:82px; color:var(--rose-mid); line-height:0.95; text-shadow:0 2px 20px rgba(0,0,0,0.35); margin:2px 0 6px; }
+
+    .card-body { padding:36px 52px 52px; }
+    .divider { display:flex; align-items:center; gap:14px; margin:0 0 26px; }
+    .div-line { flex:1; height:1px; background:linear-gradient(to right,transparent,rgba(200,168,130,0.45),transparent); }
+    .invite-copy { text-align:center; font-family:var(--font-body-kh); font-size:16px; color:var(--text-soft); line-height:2.2; margin-bottom:28px; }
+
+    .date-block { text-align:center; margin-bottom:26px; padding: 8px 0; }
+    .day-label  { font-family:var(--font-ui-kh); font-weight:300; font-size:12px; letter-spacing:0.08em; color:var(--gold-dark); margin-bottom:14px; line-height:2; }
+    .date-main  { font-family:var(--font-display-kh); font-size:32px; color:var(--text-bright); line-height:1.6; margin-bottom:0; }
+    .year-main  { font-family:var(--font-display-kh); font-size:22px; color:var(--text-bright); line-height:1.6; }
+    .year-text  { display:block; font-family:var(--font-body-kh); font-weight:300; font-size:18px; color:var(--text-soft); margin-top:2px; margin-bottom:2px; line-height:2; }
+
+    .venue-block   { text-align:center; margin-bottom:28px; }
+    .venue-name    { font-family:var(--font-body-kh); font-size:20px; font-weight:700; color:var(--text-bright); margin-bottom:8px; line-height:1.7; }
+    .venue-address { font-family:var(--font-ui-kh); font-weight:300; font-size:14px; color:var(--text-faint); line-height:2; margin-bottom:16px; }
+    .venue-divider { height:1px; background:linear-gradient(to right,transparent,rgba(200,168,130,0.25),transparent); margin:16px 0; }
+
+    .inv-guests       { border-top:1px solid rgba(200,168,130,0.22); padding-top:26px; text-align:center; }
+    .inv-guests-label { font-family:var(--font-display-kh); font-size:12px; color:var(--gold); margin-bottom:14px; line-height:2; }
+    .inv-guest-row    { font-family:var(--font-body-kh); font-size:17px; color:var(--text-soft); line-height:2; animation:fadeUp 0.3s ease both; }
+
+    /* ──────────────────────────────────────────
+       RSVP FORM
+    ────────────────────────────────────────── */
+    .form-panel {
+      background: var(--navy);
+      border: 1px solid rgba(200,168,130,0.22);
+      padding: 36px 32px 42px;
+      width: 100%; max-width: 350px;
+      box-shadow: 0 12px 60px rgba(0,0,0,0.45);
+      animation: fadeUp 0.8s ease both;
+      flex-shrink: 0;
+    }
+    .form-title    { font-family:var(--font-display-kh); font-size:16px; color:var(--gold); margin-bottom:14px; padding-bottom:16px; border-bottom:1px solid rgba(200,168,130,0.28); text-align:center; line-height:2; }
+    .form-subtitle { font-family:var(--font-body-kh); font-size:15px; color:var(--text-soft); line-height:1.9; text-align:center; }
+    .form-subtitle em { font-style:normal; font-weight:700; color:var(--rose); }
+    .sec-label { font-family:var(--font-ui-kh); font-weight:300; font-size:11px; letter-spacing:0.06em; color:var(--gold-dark); margin:22px 0 10px; }
+    .field { display:flex; flex-direction:column; flex:1; margin-bottom:12px; }
+    .field label { font-family:var(--font-ui-kh); font-weight:300; font-size:11px; color:var(--text-faint); margin-bottom:6px; }
+    .field input, .field select {
+      background: rgba(255,255,255,0.055); border:1px solid rgba(200,168,130,0.28);
+      padding:10px 13px; font-family:var(--font-ui-kh); font-size:14px;
+      color:var(--text-bright); outline:none; width:100%; border-radius:0;
+      transition:border-color 0.2s,box-shadow 0.2s;
+    }
+    .field input:focus, .field select:focus { border-color:var(--gold); box-shadow:0 0 0 3px rgba(200,168,130,0.12); }
+    .field input::placeholder { color:rgba(200,168,130,0.3); }
+    .field select {
+      appearance:none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23c8a882' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat:no-repeat; background-position:right 12px center; cursor:pointer;
+    }
+    .field select option { background:var(--navy-deep); color:var(--text-bright); }
+
+    .counter-row { display:flex; align-items:center; border:1px solid rgba(200,168,130,0.28); background:rgba(255,255,255,0.055); height:42px; overflow:hidden; }
+    .counter-btn { width:40px; height:100%; background:none; border:none; color:var(--gold); font-size:18px; cursor:pointer; transition:background 0.15s; display:flex; align-items:center; justify-content:center; }
+    .counter-btn:hover { background:rgba(200,168,130,0.1); }
+    .counter-display { flex:1; text-align:center; font-family:var(--font-body-kh); font-size:18px; color:var(--text-bright); }
+
+    .form-sep { height:1px; background:linear-gradient(to right,transparent,rgba(200,168,130,0.28),transparent); margin:20px 0; }
+    .attend-options { display:flex; flex-direction:column; gap:9px; }
+    .attend-opt {
+      display:flex; align-items:center; gap:12px; padding:11px 14px;
+      border:1px solid rgba(200,168,130,0.22); background:rgba(255,255,255,0.04);
+      cursor:pointer; transition:border-color 0.2s,background 0.2s;
+      font-family:var(--font-body-kh); font-size:15px; color:var(--text-soft); line-height:1.8;
+    }
+    .attend-opt:has(input:checked) { border-color:var(--gold); background:rgba(200,168,130,0.09); color:var(--text-bright); }
+    .attend-opt input[type="radio"] { accent-color:var(--gold); width:16px; height:16px; flex-shrink:0; }
+
+    .add-btn {
+      width:100%; background:none; border:1px solid var(--gold);
+      padding:13px; font-family:var(--font-display-kh); font-size:13px;
+      color:var(--gold); cursor:pointer; margin-top:18px;
+      transition:background 0.25s,color 0.25s; line-height:2;
+    }
+    .add-btn:hover { background:var(--gold); color:var(--navy-deep); }
+
+    .confirm-name { font-family:var(--font-display-kh); font-size:18px; color:var(--text-bright); margin-bottom:12px; line-height:2; }
+    .confirm-msg  { font-family:var(--font-body-kh); font-size:15px; color:var(--text-soft); line-height:2; }
+
+    /* ──────────────────────────────────────────
+       GUEST LIST SECTION
+    ────────────────────────────────────────── */
+    .guest-section { max-width:1100px; margin:52px auto 0; animation:fadeUp 0.6s ease 0.4s both; }
+    .gs-header {
+      display:flex; align-items:center; justify-content:space-between;
+      margin-bottom:20px; padding-bottom:16px;
+      border-bottom:1px solid rgba(200,168,130,0.25);
+      flex-wrap:wrap; gap:12px;
+    }
+    .gs-title { font-family:var(--font-display-kh); font-size:14px; color:var(--gold); line-height:2; }
+    .gs-badges { display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+    .badge { font-family:var(--font-ui-kh); font-size:12px; color:var(--text-faint); background:rgba(200,168,130,0.07); border:1px solid rgba(200,168,130,0.18); padding:4px 14px; border-radius:20px; }
+    .badge b { color:var(--gold); }
+    /* ── Guest Table ── */
+    .guest-table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      border: 1px solid rgba(200,168,130,0.18);
+    }
+    .guest-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: var(--font-ui-kh);
+      font-size: 13px;
+    }
+    .guest-table thead tr {
+      background: rgba(200,168,130,0.08);
+      border-bottom: 1px solid rgba(200,168,130,0.28);
+    }
+    .guest-table thead th {
+      padding: 11px 14px;
+      text-align: left;
+      font-family: var(--font-ui-kh);
+      font-weight: 300;
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      color: var(--gold-dark);
+      white-space: nowrap;
+    }
+    .guest-table thead th:first-child { text-align: center; width: 44px; }
+    .guest-table tbody tr {
+      border-bottom: 1px solid rgba(200,168,130,0.09);
+      transition: background 0.15s;
+    }
+    .guest-table tbody tr:last-child { border-bottom: none; }
+    .guest-table tbody tr:hover { background: rgba(200,168,130,0.04); }
+    .guest-table td {
+      padding: 11px 14px;
+      color: var(--text-soft);
+      vertical-align: middle;
+      line-height: 1.6;
+    }
+    .gt-no {
+      text-align: center;
+      font-family: var(--font-names-en);
+      font-style: italic;
+      font-size: 12px;
+      color: var(--text-faint);
+      width: 44px;
+    }
+    .gt-name {
+      font-family: var(--font-body-kh);
+      font-size: 14px;
+      color: var(--text-bright);
+      white-space: nowrap;
+    }
+    .gt-qty {
+      font-family: var(--font-ui-kh);
+      font-size: 12px;
+      color: var(--gold);
+      text-align: center;
+      white-space: nowrap;
+    }
+    .gt-phone, .gt-address, .gt-msg {
+      font-size: 12px;
+      color: var(--text-faint);
+      white-space: nowrap;
+    }
+    .gt-msg { font-style: italic; color: var(--text-soft); }
+    .gt-ts  { font-size: 11px; color: var(--text-faint); opacity: 0.6; white-space: nowrap; }
+    .guest-empty { text-align:center; padding:44px 20px; font-family:var(--font-body-kh); font-size:15px; color:var(--text-faint); line-height:2.2; border:1px dashed rgba(200,168,130,0.13); }
+
+    /* ══════════════════════════════════════════
+       TICKER  —  clean, mobile-first redesign
+    ══════════════════════════════════════════ */
+    .ticker-wrap {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      z-index: 100;
+      height: var(--ticker-h);
+      background: linear-gradient(to right, #0b1620 0%, #0e1e30 50%, #0b1620 100%);
+      border-top: 1px solid rgba(200,168,130,0.28);
+      box-shadow: 0 -6px 32px rgba(0,0,0,0.5);
+      display: flex;
+      align-items: center;
+      gap: 0;
+      overflow: hidden;
+    }
+
+    /* Left label pill */
+    .ticker-label {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 0 18px 0 16px;
+      height: 100%;
+      border-right: 1px solid rgba(200,168,130,0.2);
+      background: rgba(200,168,130,0.06);
+    }
+    .ticker-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--gold);
+      box-shadow: 0 0 6px var(--gold);
+      flex-shrink: 0;
+      animation: tickerPulse 2s ease-in-out infinite;
+    }
+    @keyframes tickerPulse {
+      0%,100% { opacity:1; transform:scale(1); }
+      50%      { opacity:0.4; transform:scale(0.7); }
+    }
+    .ticker-label-text {
+      font-family: var(--font-display-kh);
+      font-size: 10px;
+      color: var(--gold);
+      line-height: 1;
+      white-space: nowrap;
+    }
+
+    /* Scroll runway */
+    .ticker-outer {
+      flex: 1;
+      overflow: hidden;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      /* fade edges */
+      mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
+    }
+
+    .ticker-track {
+      display: flex;
+      align-items: center;
+      white-space: nowrap;
+      will-change: transform;
+      /* JS sets animation-duration dynamically */
+      animation: tickerScroll linear infinite;
+    }
+    .ticker-track:hover { animation-play-state: paused; }
+
+    @keyframes tickerScroll {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* Individual guest chip inside ticker */
+    .t-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 6px;
+      padding: 6px 14px 6px 10px;
+      background: rgba(200,168,130,0.07);
+      border: 1px solid rgba(200,168,130,0.18);
+      border-radius: 40px;
+      transition: background 0.2s;
+    }
+    .t-chip:hover { background: rgba(200,168,130,0.13); }
+
+    /* Avatar circle with initials */
+    .t-avatar {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #1e3c60, #2a4a70);
+      border: 1px solid rgba(200,168,130,0.35);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      font-family: var(--font-names-en);
+      font-style: italic;
+      font-size: 11px;
+      color: var(--gold-light);
+      line-height: 1;
+    }
+
+    .t-body { display: flex; flex-direction: column; gap: 1px; }
+
+    .t-name {
+      font-family: var(--font-body-kh);
+      font-size: 13px;
+      color: var(--text-bright);
+      line-height: 1.4;
+    }
+
+    .t-meta {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .t-qty {
+      font-family: var(--font-ui-kh);
+      font-size: 10px;
+      color: var(--gold);
+    }
+    .t-sep {
+      width: 3px; height: 3px;
+      border-radius: 50%;
+      background: rgba(200,168,130,0.3);
+    }
+    .t-loc {
+      font-family: var(--font-ui-kh);
+      font-size: 10px;
+      color: var(--text-faint);
+      max-width: 90px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Divider between chips */
+    .t-div {
+      display: inline-block;
+      width: 4px; height: 4px;
+      border-radius: 50%;
+      background: rgba(200,168,130,0.2);
+      margin: 0 8px;
+      flex-shrink: 0;
+    }
+
+    /* ──────────────────────────────────────────
+       RESPONSIVE
+    ────────────────────────────────────────── */
+    @media (max-width: 620px) {
+      .card-header .names h1  { font-size:52px; }
+      .card-header .ampersand { font-size:60px; }
+      .card-body  { padding:28px 26px 40px; }
+      .form-panel { max-width:100%; }
+      .t-avatar { width:24px; height:24px; font-size:10px; }
+      .t-chip   { padding: 5px 10px 5px 8px; gap:7px; margin:0 4px; }
+      .t-name   { font-size:12px; }
+      .t-loc    { max-width:60px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══ INVITATION + RSVP ══ -->
+<div class="page-layout">
+
+  <div class="card">
+    <div class="c-br"></div><div class="c-bl"></div>
+    <div class="card-header">
+      <canvas class="bokeh-canvas" id="bokehCanvas"></canvas>
+
+      <div class="main-title-wrap">
+        <div class="main-title-deco">
+          <div class="main-title-deco-line"></div>
+          <span class="main-title-deco-star">✦ ✦ ✦</span>
+          <div class="main-title-deco-line right"></div>
+        </div>
+        <p class="main-title">សិរីសួស្ដីអាពាហ៍ពិពាហ៍</p>
+        <p class="main-title-sub">Wedding Invitation</p>
+        <div class="main-title-deco" style="margin-top:10px;margin-bottom:0">
+          <div class="main-title-deco-line"></div>
+          <span class="main-title-deco-star">✦</span>
+          <div class="main-title-deco-line right"></div>
+        </div>
+      </div>
+
+      <div class="names">
+        <h1>Vicheanuk</h1>
+        <span class="ampersand">&amp;</span>
+        <h1>Menly</h1>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="divider">
+        <div class="div-line"></div>
+        <svg width="14" height="14" viewBox="0 0 14 14"><path d="M7 0.5L8.1 5.3L13 3.8L9.5 7L13 10.2L8.1 8.7L7 13.5L5.9 8.7L1 10.2L4.5 7L1 3.8L5.9 5.3Z" fill="#c8a882" opacity="0.6"/></svg>
+        <div class="div-line"></div>
+      </div>
+      <p class="invite-copy">មានកិត្តិយសសូមគោរពអញ្ជើញចូលរួមជាភ្ញៀវកិត្តិយស<br/>ក្នុងពិធីសិរីមង្គលអាពាហ៍ពិពាហ៍របស់យើងខ្ញុំ</p>
+      <div class="date-block">
+        <p class="day-label">ថ្ងៃអាទិត្យ​​ រោច ខែចេត្រ ឆ្នាំម្សាញ់ សប្តស័ក ពុទ្ធសករាជ ២៥៦៩ ត្រូវនឹងថ្ងៃទី</p>
+        <p class="date-main">០៥ មេសា</p>
+        <span class="year-text">ឆ្នាំ</span>
+        <p class="year-main">២០២៦</p>
+        <span class="year-text">វេលាម៉ោង​ ៥ ល្ងាច</span>
+      </div>
+      <div class="venue-block">
+        <p class="venue-name">នៅ គេហដ្ឋានខាងប្រុស</p>
+        <p class="venue-address">ភូមិខ្នាទៃ ឃុំអង្គតាសោម<br/>ស្រុកត្រាំកក់ ខេត្តតាកែវ​</p>
+        <div class="venue-divider"></div>
+        <p class="venue-name">ដោយមេត្រីភាព</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- RSVP Form -->
+  <div class="form-panel" id="formPanel">
+    <p class="form-title" id="formTitle">សូមបំពេញព័ត៌មានរបស់អ្នក</p>
+    <p class="form-subtitle">សូមបញ្ជាក់ការចូលរួមរបស់អ្នកត្រឹម<br/><em>ថ្ងៃទី ០៥ មេសា ២០២៦</em></p>
+
+    <div id="formFields">
+      <div class="form-sep"></div>
+      <p class="sec-label">ព័ត៌មានរបស់អ្នក</p>
+      <div class="field">
+        <label>ឋានន្តរស័ក្តិ</label>
+        <select id="gTitle">
+          <option value="">—</option>
+          <option value="លោក">លោក</option>
+          <option value="លោកស្រី">លោកស្រី</option>
+          <option value="លោកគ្រូ">លោកគ្រូ</option>
+          <option value="អ្នកគ្រូ">អ្នកគ្រូ</option>
+          <option value="កញ្ញា">កញ្ញា</option>
+          <option value="វេជ្ជបណ្ឌិត">វេជ្ជបណ្ឌិត</option>
+          <option value="សាស្ត្រាចារ្យ">សាស្ត្រាចារ្យ</option>
+        </select>
+      </div>
+      <div class="field"><label>នាមត្រកូល</label><input id="gLast" type="text" placeholder="ឧ. សុខ"/></div>
+      <div class="field"><label>នាមខ្លួន</label><input id="gFirst" type="text" placeholder="ឧ. សុវណ្ណ"/></div>
+      
+      <div class="field"><label>លេខទូរស័ព្ទ</label><input id="gPhone" type="tel" placeholder="012 345 678"/></div>
+      <div class="field"><label>អាសយដ្ឋាន</label><input id="gAddress" type="text" placeholder="តាកែវ កម្ពុជា"/></div>
+      <div class="form-sep"></div>
+      <p class="sec-label">ការចូលរួម</p>
+      <div class="attend-options">
+        <label class="attend-opt">
+          <input type="radio" name="attend" value="yes" checked/>
+          <span>ចូលរួមដោយក្ដីសោមនស្ស</span>
+        </label>
+      </div>
+      <div class="form-sep"></div>
+      <p class="sec-label">ចំនួនភ្ញៀវ</p>
+      <div class="counter-row">
+        <button type="button" class="counter-btn" onclick="changeQty(-1)">−</button>
+        <span class="counter-display" id="qtyDisplay">1</span>
+        <button type="button" class="counter-btn" onclick="changeQty(1)">+</button>
+      </div>
+      <div class="form-sep"></div>
+      <p class="sec-label">សារជូនពរ</p>
+      <div class="field"><input id="gMsg" type="text" placeholder="សូមបញ្ចូលសាររបស់អ្នក…"/></div>
+      <button type="button" class="add-btn" onclick="submitRsvp()">បញ្ជាក់ការចូលរួម</button>
+    </div>
+
+    <div id="rsvpConfirm" style="display:none;text-align:center;padding-top:26px">
+      <svg width="40" height="40" viewBox="0 0 40 40" fill="none" style="margin:0 auto 16px;display:block">
+        <circle cx="20" cy="20" r="18.5" stroke="#c8a882" stroke-width="1.5"/>
+        <path d="M12.5 20.5l6 6 10-12" stroke="#c8a882" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <p class="confirm-name" id="confirmName"></p>
+      <p class="confirm-msg">ការចូលរួមរបស់អ្នកត្រូវបានកត់ត្រា។<br/>យើងខ្ញុំទន្ទឹងរង់ចាំទទួលស្វាគមន៍អ្នក។</p>
+      <button type="button" class="add-btn" style="margin-top:20px" onclick="resetRsvp()">បញ្ជូនមួយទៀត</button>
+    </div>
+  </div>
+
+</div><!-- end page-layout -->
+
+<!-- ══ GUEST LIST ══ -->
+<div class="guest-section">
+  <div class="gs-header">
+    <div class="gs-title">បញ្ជីភ្ញៀវចូលរួម</div>
+    <div class="gs-badges">
+      <span class="badge">ភ្ញៀវ <b id="cGuests">0</b> នាក់</span>
+      <span class="badge">កន្លែង <b id="cSeats">0</b></span>
+    </div>
+  </div>
+  <div id="guestTableWrap">
+    <div class="guest-empty">មិនទាន់មានភ្ញៀវបញ្ជាក់ការចូលរួម</div>
+  </div>
+</div>
+
+
+
+<script>
+  /* ══════════════════════════════════════════════
+     API  —  talks to server.py on localhost:8000
+  ══════════════════════════════════════════════ */
+  const API = 'http://localhost:8000/api/guests';
+  const SESSION_KEY = 'rsvp-confirmed-name';
+
+  async function dbLoad() {
+    try {
+      const r = await fetch(API);
+      return r.ok ? await r.json() : [];
+    } catch { return []; }
+  }
+
+  /* ── Form helpers ── */
+  const $   = id => document.getElementById(id);
+  const val = id => $(id).value.trim();
+  let qty = 1;
+
+  function changeQty(d) {
+    qty = Math.max(1, Math.min(20, qty + d));
+    $('qtyDisplay').textContent = qty;
+  }
+
+  async function submitRsvp() {
+    const first = val('gFirst'), last = val('gLast');
+    if (!first || !last) { alert('សូមបញ្ចូលនាមខ្លួន និងនាមត្រកូលរបស់អ្នក។'); return; }
+
+    const title    = val('gTitle');
+    const fullName = [title, last, first].filter(Boolean).join(' ');
+
+    const entry = {
+      id:        'g' + Date.now() + Math.random().toString(36).slice(2,5),
+      title,
+      firstName: first,
+      lastName:  last,
+      fullName,
+      qty,
+      phone:   val('gPhone'),
+      address: val('gAddress'),
+      message: val('gMsg'),
+      ts:      new Date().toISOString()
+    };
+
+    try {
+      const res = await fetch(API, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(entry)
+      });
+      if (!res.ok) throw new Error('failed');
+    } catch {
+      alert('មានបញ្ហាក្នុងការរក្សាទុក។ សូមពិនិត្យថា server.py កំពុងដំណើរការ។');
+      return;
+    }
+
+    // Persist confirmed name across any reload
+    sessionStorage.setItem(SESSION_KEY, fullName);
+    showConfirm(fullName);
+  }
+
+  function showConfirm(fullName) {
+    $('confirmName').textContent   = fullName;
+    $('formFields').style.display  = 'none';
+    $('rsvpConfirm').style.display = 'block';
+    $('formTitle').textContent     = 'សូមគោរពអរគុណ!';
+  }
+
+  function resetRsvp() {
+    sessionStorage.removeItem(SESSION_KEY);
+    ['gFirst','gLast','gPhone','gAddress','gMsg','gTitle'].forEach(id => $(id).value = '');
+    document.querySelector('input[name="attend"][value="yes"]').checked = true;
+    qty = 1; $('qtyDisplay').textContent = '1';
+    $('formFields').style.display  = '';
+    $('rsvpConfirm').style.display = 'none';
+    $('formTitle').textContent     = 'សូមបំពេញព័ត៌មានរបស់អ្នក';
+  }
+
+  /* ══════════════════════════════════════════════
+     RENDER
+  ══════════════════════════════════════════════ */
+  function refreshAll(list) { renderGrid(list); }
+
+  function renderGrid(guests) {
+    $('cGuests').textContent = guests.length;
+    $('cSeats').textContent  = guests.reduce((s,g) => s + (g.qty||1), 0);
+    const wrap = $('guestTableWrap');
+    if (!guests.length) {
+      wrap.innerHTML = `<div class="guest-empty">មិនទាន់មានភ្ញៀវបញ្ជាក់ការចូលរួម</div>`;
+      return;
+    }
+    wrap.innerHTML = `
+      <div class="guest-table-wrap">
+        <table class="guest-table">
+          <thead>
+            <tr>
+              <th>លេខ</th>
+              <th>ឋានន្តរស័ក្តិ</th>
+              <th>នាមត្រកូល</th>
+              <th>នាមខ្លួន</th>
+              <th>ចំនួន</th>
+              <th>លេខទូរស័ព្ទ</th>
+              <th>អាសយដ្ឋាន</th>
+              <th>សារ</th>
+              <th>ពេលវេលា</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${guests.map((g, i) => {
+              const d  = new Date(g.ts);
+              const ts = isNaN(d) ? '—' : d.toLocaleString('km-KH', {dateStyle:'short', timeStyle:'short'});
+              let t = g.title || '', l = g.lastName || '', f = g.firstName || '';
+              if (!t && !l && !f && g.fullName) {
+                const p = g.fullName.split(' ');
+                if (p.length >= 3)     { t = p[0]; l = p[1]; f = p.slice(2).join(' '); }
+                else if (p.length===2) { l = p[0]; f = p[1]; }
+                else                   { f = g.fullName; }
+              }
+              return `<tr>
+                <td class="gt-no">${i+1}</td>
+                <td class="gt-name" style="color:var(--text-faint)">${t||'—'}</td>
+                <td class="gt-name">${l||'—'}</td>
+                <td class="gt-name">${f||'—'}</td>
+                <td class="gt-qty">${g.qty}</td>
+                <td class="gt-phone">${g.phone||'—'}</td>
+                <td class="gt-address">${g.address||'—'}</td>
+                <td class="gt-msg">${g.message||'—'}</td>
+                <td class="gt-ts">${ts}</td>
+              </tr>`;
+            }).join('')}
+          </tbody>
+        </table>
+      </div>`;
+  }
+
+  /* ══════════════════════════════════════════════
+     INIT — check sessionStorage first so confirmation
+     survives any page reload until user clicks reset
+  ══════════════════════════════════════════════ */
+  (async () => {
+    const saved = sessionStorage.getItem(SESSION_KEY);
+    if (saved) {
+      // Already submitted — show confirmation card immediately
+      showConfirm(saved);
+    }
+    refreshAll(await dbLoad());
+    setInterval(async () => { refreshAll(await dbLoad()); }, 10000);
+  })();
+
+  /* ── Bokeh ── */
+  (function() {
+    const canvas = $('bokehCanvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let dots = [];
+    const resize = () => {
+      canvas.width  = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+      dots = [];
+      const n = Math.floor(canvas.width * canvas.height / 1500);
+      for (let i = 0; i < n; i++) dots.push({
+        x: Math.random()*canvas.width, y: Math.random()*canvas.height,
+        r: Math.random()*10+2, alpha: Math.random()*0.52+0.07,
+        speed: Math.random()*0.13+0.02, drift: (Math.random()-0.5)*0.28,
+        warm: Math.random() > 0.38
+      });
+    };
+    const draw = () => {
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      dots.forEach(d => {
+        const g = ctx.createRadialGradient(d.x,d.y,0,d.x,d.y,d.r);
+        const c1 = "rgba(225,182,132," + d.alpha + ")";
+        const c2 = "rgba(180,210,255," + (d.alpha*0.45) + ")";
+        g.addColorStop(0, d.warm ? c1 : c2);
+        g.addColorStop(1,'rgba(0,0,0,0)');
+        ctx.beginPath(); ctx.arc(d.x,d.y,d.r,0,Math.PI*2);
+        ctx.fillStyle = g; ctx.fill();
+        d.y -= d.speed; d.x += d.drift;
+        if (d.y+d.r < 0)            { d.y = canvas.height+d.r; d.x = Math.random()*canvas.width; }
+        if (d.x < -d.r)             d.x = canvas.width+d.r;
+        if (d.x > canvas.width+d.r) d.x = -d.r;
+      });
+      requestAnimationFrame(draw);
+    };
+    resize(); draw(); window.addEventListener('resize', resize);
+  })();
+</script>
+</body>
+</html>
